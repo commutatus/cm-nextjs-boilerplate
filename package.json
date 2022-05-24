@@ -3,9 +3,17 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:prod": "yarn decrypt-production-env && yarn dev",
+    "dev:staging": "yarn decrypt-staging-env && yarn dev",
     "build": "next build",
+    "build:prod": "yarn decrypt-production-env && next build",
+    "build:staging": "yarn decrypt-staging-env && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "encrypt-production-env": "openssl aes-256-cbc -in .env.local -out keys/production.enc -pass pass:$DECRYPTION_SECRET_KEY -md sha512 -pbkdf2",
+    "decrypt-production-env": "openssl aes-256-cbc -d -in keys/production.enc -out .env.local -pass pass:$DECRYPTION_SECRET_KEY -md sha512 -pbkdf2",
+    "encrypt-staging-env": "openssl aes-256-cbc -in .env.local -out keys/staging.enc -pass pass:$DECRYPTION_SECRET_KEY -md sha512 -pbkdf2",
+    "decrypt-staging-env": "openssl aes-256-cbc -d -in keys/staging.enc -out .env.local -pass pass:$DECRYPTION_SECRET_KEY -md sha512 -pbkdf2"
   },
   "dependencies": {
     "next": "12.0.2",
