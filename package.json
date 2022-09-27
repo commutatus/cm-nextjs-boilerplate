@@ -5,6 +5,7 @@
     "dev": "next dev",
     "dev:prod": "yarn decrypt-production-env && yarn dev",
     "dev:staging": "yarn decrypt-staging-env && yarn dev",
+    "build:amplify": "next build",
     "build": "next build",
     "build:prod": "yarn decrypt-production-env && next build",
     "build:staging": "yarn decrypt-staging-env && next build",
