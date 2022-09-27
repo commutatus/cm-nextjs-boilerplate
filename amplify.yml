@@ -4,7 +4,6 @@ frontend:
     preBuild:
       commands:
         - yum -y install openssl11
-        - openssl11 version
         - yarn install
     build:
       commands:
