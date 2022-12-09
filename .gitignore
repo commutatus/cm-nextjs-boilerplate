@@ -38,5 +38,5 @@ yarn-error.log*
 
 .env*
 
-# Encryption Key
-.encryption.key
+# Encryption Keys
+.*.key

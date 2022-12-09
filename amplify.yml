@@ -3,12 +3,12 @@ frontend:
   phases:
     preBuild:
       commands:
-        - yum -y install openssl11
+        - if [ "${ENV}" = "prod" ]; then echo $DECRYPTION_KEY_PROD > .production.key; fi
+        - if [ "${ENV}" = "staging" ]; then echo $DECRYPTION_KEY_STAGING > .staging.key; fi
         - yarn install
     build:
       commands:
-        - openssl11 aes-256-cbc -d -in keys/$AMPLIFY_ENV.enc -out .env.local -pass pass:$DECRYPTION_SECRET_KEY -md sha512 -pbkdf2
-        - yarn run build:amplify
+        - yarn run build:$ENV
   artifacts:
     baseDirectory: out
     files:
