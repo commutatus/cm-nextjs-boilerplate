@@ -5,12 +5,12 @@ frontend:
       commands:
         - if [ "${ENV}" = "prod" ]; then echo $DECRYPTION_KEY_PROD > .production.key; fi
         - if [ "${ENV}" = "staging" ]; then echo $DECRYPTION_KEY_STAGING > .staging.key; fi
-        - yarn install
+        - npm run install
     build:
       commands:
-        - yarn run build:$ENV
+        - npm run build:$ENV
   artifacts:
-    baseDirectory: out
+    baseDirectory: .next
     files:
       - "**/*"
   cache:
