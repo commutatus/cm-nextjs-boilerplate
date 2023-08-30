@@ -1,34 +1,29 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Project Name
 
-## Getting Started
+## Initial repository setup (for repo owners)
 
-First, run the development server:
+These steps need to be performed only once after creating the repository from the template
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+### Secrets
+1. Run `yarn create-encryption-keys`. This will generate the prod, dev, and staging encryption keys. You'll need these keys to run the `encrypt-env` and `decrypt-env` set of commands
+2. Save the generated keys in a secure location from where they can be shared with teammates
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Amplify
+1. Create an environment variable `ENV`. This can have only one of these value: `staging` or `prod`
+2. Create an environment variable `DECRYPTION_KEY_PROD` with the same value as the prod decryption key
+3. Create `DECRYPTION_KEY_STAGING` from the staging decryption key
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### General
+1. Finish setting up all previous sections
+2. Update this Readme with information relevant to the project
+3. Delete the `Initial Setup` section
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Initial setup (for developers)
+1. `nvm use` to set the correct node version
+2. `npm run install` to install the dependencies
+3. Get access to the decryption key file from your team lead. Paste this file in the root of the repository
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Development
+1. `nvm use` to set the correct node version
+2. `npm run dev:staging` or `npm run dev:prod` based on the env you're using. Check the CLI to find the URL that you need to open in the browser
