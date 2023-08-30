@@ -1,0 +1,49 @@
+{
+  "name": "cm-nextjs-boilerplate",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "dev:prod": "npm run decrypt-production-env && npm run dev",
+    "dev:staging": "npm run decrypt-staging-env && npm run dev",
+    "build": "next build",
+    "build:prod": "npm run decrypt-production-env && next build && npm run build-sitemap",
+    "build:staging": "npm run decrypt-staging-env && next build && npm run build-sitemap",
+    "start": "next start",
+    "lint": "next lint",
+    "encrypt-production-env": "cm-env encrypt prod",
+    "decrypt-production-env": "cm-env decrypt prod",
+    "encrypt-staging-env": "cm-env encrypt staging",
+    "decrypt-staging-env": "cm-env decrypt staging",
+    "encrypt-dev-env": "cm-env encrypt dev",
+    "decrypt-dev-env": "cm-env decrypt dev",
+    "create-encryption-keys": "cm-env setup prod && cm-env setup staging && cm-env setup dev",
+    "test-all": "npm run lint && npm run build:staging --debug",
+    "build-sitemap": "next-sitemap",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.8.1",
+    "antd": "^5.8.5",
+    "classnames": "^2.3.2",
+    "eslint-config-next": "13.4.19",
+    "graphql": "^16.8.0",
+    "next": "13.4.19",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@commutatus/cm-env": "^1.1.0",
+    "@types/node": "20.5.6",
+    "@types/react": "18.2.21",
+    "@types/react-dom": "18.2.7",
+    "autoprefixer": "10.4.15",
+    "eslint": "8.47.0",
+    "husky": "^8.0.3",
+    "next-sitemap": "^4.2.2",
+    "postcss": "8.4.28",
+    "sass": "^1.66.1",
+    "tailwindcss": "3.3.3",
+    "typescript": "5.2.2"
+  }
+}
