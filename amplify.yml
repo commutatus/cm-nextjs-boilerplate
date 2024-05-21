@@ -5,7 +5,7 @@ frontend:
       commands:
         - if [ "${ENV}" = "prod" ]; then echo $DECRYPTION_KEY_PROD > .production.key; fi
         - if [ "${ENV}" = "staging" ]; then echo $DECRYPTION_KEY_STAGING > .staging.key; fi
-        - npm run install
+        - npm install
     build:
       commands:
         - npm run build:$ENV
