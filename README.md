@@ -1,12 +1,13 @@
 # Project Name
 
-## Initial repository setup (for repo owners)
+## Repository setup and deployment (for repo owners)
 
 These steps need to be performed only once after creating the repository from the template
 
 ### Secrets
 1. Run `yarn create-encryption-keys`. This will generate the prod, dev, and staging encryption keys. You'll need these keys to run the `encrypt-env` and `decrypt-env` set of commands
 2. Save the generated keys in a secure location from where they can be shared with teammates
+3. Delete these commands from `package.json`: `create-encryption-keys` and `setup-encryption`
 
 ### Amplify
 1. Create an environment variable `ENV`. This can have only one of these value: `staging` or `prod`
@@ -16,7 +17,7 @@ These steps need to be performed only once after creating the repository from th
 ### General
 1. Finish setting up all previous sections
 2. Update this Readme with information relevant to the project
-3. Delete the `Initial Setup` section
+3. Delete the `Repository setup and deployment (for repo owners)` section
 
 ## Initial setup (for developers)
 1. `nvm use` to set the correct node version

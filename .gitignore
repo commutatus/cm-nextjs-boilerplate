@@ -36,3 +36,9 @@ next-env.d.ts
 
 # Encryption Keys
 .*.key
+
+sitemap*
+robots.txt
+yalc.lock
+.yalc
+*.code-workspace
