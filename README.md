@@ -14,7 +14,7 @@ These steps need to be performed only once after creating the repository from th
 3. Create `DECRYPTION_KEY_STAGING` from the staging decryption key
 
 ### General
-1. Update project name in readme and `package.json`
+1. Update project name in `README.md`, `package.json`, and in `src/app/layout.tsx`
 2. Update this Readme with information relevant to the project. [Example of a good readme](https://github.com/commutatus/awesome?tab=readme-ov-file#awesome)
 3. Remove the `First time setup and deployment` section from the Readme
 
