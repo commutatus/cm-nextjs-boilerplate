@@ -20,7 +20,8 @@
     "setup-encryption": "npm run encrypt-production-env && npm run encrypt-staging-env && npm run encrypt-dev-env",
     "create-encryption-keys": "touch .env.local && cm-env setup prod && cm-env setup staging && cm-env setup dev && npm run setup-encryption",
     "test-all": "npm run lint && npm run build:staging --debug",
-    "build-sitemap": "next-sitemap"
+    "build-sitemap": "next-sitemap",
+    "prepare": "husky"
   },
   "dependencies": {
     "@ant-design/cssinjs": "^1.22.0",
