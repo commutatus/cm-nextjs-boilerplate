@@ -5,6 +5,7 @@ import {
   AppstoreOutlined,
   BarChartOutlined,
   CloudOutlined,
+  DownOutlined,
   ShopOutlined,
   TeamOutlined,
   UploadOutlined,
@@ -12,7 +13,7 @@ import {
   VideoCameraOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { Layout, Menu, theme } from "antd";
+import { Dropdown, Layout, Menu, theme } from "antd";
 import Segmented from "./segemented";
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -56,6 +57,9 @@ const App: React.FC = () => {
           defaultSelectedKeys={["4"]}
           items={items}
         />
+        <Dropdown menu={{ items: [{ key: 1, label: "Hello World" }] }}>
+          <span>Hover me <DownOutlined /></span>
+        </Dropdown>
       </Sider>
       <Layout style={{ marginLeft: 200 }}>
         <Header style={{ padding: 0, background: colorBgContainer }} />
