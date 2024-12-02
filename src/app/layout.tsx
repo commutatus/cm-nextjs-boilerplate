@@ -1,5 +1,5 @@
 import "@/common/styles/globals.scss";
-import StyledComponentsRegistry from "@/lib/AntdRegistry";
+import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { ConfigProvider } from "antd";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -27,7 +27,7 @@ export default function RootLayout({
     <html lang="en">
       <ConfigProvider theme={antdThemeSettings}>
         <body className={inter.className}>
-          <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+          <AntdRegistry>{children}</AntdRegistry>
         </body>
       </ConfigProvider>
     </html>
