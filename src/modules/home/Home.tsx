@@ -1,3 +1,5 @@
+import CardsListLayout from "@/common/layouts/cards-list-layout";
+import { sampleCardData } from "@/common/utils/constants";
 import { Dropdown } from "antd";
 import Image from "next/image";
 
@@ -107,6 +109,7 @@ export default function Home() {
           </p>
         </a>
       </div>
+      <CardsListLayout cardsListData={sampleCardData} />
     </main>
   );
 }
