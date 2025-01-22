@@ -3,7 +3,12 @@ import classNames from "classnames";
 import React from "react";
 
 type CardsListLayoutPropsType = {
-  cardsListData?: [] | any;
+  cardsListData: {
+    title: string;
+    description: string;
+    image: string;
+  }[];
+
   scrollable?: boolean;
   cardsPerRow?: number;
 };
