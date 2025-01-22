@@ -8,7 +8,15 @@ import React from "react";
 
 const { Title, Text } = Typography;
 
-const ProjectCard = (props: any) => {
+type ProjectCardPropsType = {
+  projectCardData: {
+    title: string;
+    description: string;
+    image: string;
+  };
+};
+
+const ProjectCard = (props: ProjectCardPropsType) => {
   const { projectCardData } = props;
   return (
     <Card
