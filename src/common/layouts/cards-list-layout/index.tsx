@@ -2,13 +2,15 @@ import ProjectCard from "@/common/components/project-card";
 import classNames from "classnames";
 import React from "react";
 
-type CardsListLayoutPropsType = {
-  cardsListData: {
-    title: string;
-    description: string;
-    image: string;
-  }[];
+type CardDataType = {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+};
 
+type CardsListLayoutPropsType = {
+  cardsListData: CardDataType[];
   scrollable?: boolean;
   cardsPerRow?: number;
 };
@@ -24,9 +26,9 @@ const CardsListLayout = (props: CardsListLayoutPropsType) => {
         "flex overflow-x-scroll": scrollable,
       })}
     >
-      {cardsListData.map((cardData: any, index: number) => (
+      {cardsListData.map((cardData: CardDataType) => (
         <div
-          key={index}
+          key={cardData.id}
           className={classNames({ "w-[300px] flex-shrink-0": scrollable })}
         >
           <ProjectCard projectCardData={cardData} />
