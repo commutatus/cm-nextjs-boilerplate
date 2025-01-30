@@ -4,7 +4,7 @@ import React from "react";
 export type CustomIconProps = {
   icon: string;
   customClass?: string;
-  customStyle?: any;
+  customStyle?: object;
 };
 
 const CustomIcon = (props: CustomIconProps) => {

@@ -27,7 +27,7 @@ function authMiddleware() {
     }
 
     // add the authorization to the headers
-    operation.setContext((context: any) => ({
+    operation.setContext((context: { headers: object }) => ({
       headers: {
         authorization: token,
         ...context.headers,
