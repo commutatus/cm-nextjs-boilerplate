@@ -7,6 +7,21 @@ These steps need to be performed only once after creating the repository from th
 ### Secrets
 1. Run `npm run create-encryption-keys`. This will generate the `.production.key`, `.staging.key`, and `.development.key` encryption keys
 2. Save all the `*.key` files in a secure location
+3. **Set up environment variables for decryption**
+  To decrypt environment variables, follow these steps:
+Run the appropriate decryption command based on the environment:
+npm run decrypt-staging-env    # For Staging
+npm run decrypt-production-env # For Production
+npm run decrypt-dev-env        # For Development
+Open the .env.local file and add the following variable based on your environment:
+NEXT_PUBLIC_ENV=staging    # For Staging
+NEXT_PUBLIC_ENV=production # For Production
+NEXT_PUBLIC_ENV=dev        # For Development
+Encrypt Environment Variables After Changes
+After updating .env.local, re-encrypt the environment variables to keep them secure:
+npm run encrypt-staging-env    # For Staging
+npm run encrypt-production-env # For Production
+npm run encrypt-dev-env        # For Development
 
 ### Amplify
 1. Create an environment variable `ENV`. This can have only one of these value: `staging` or `prod`
