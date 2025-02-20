@@ -1,6 +1,7 @@
 const ENV_PREFIX: Record<string, string> = {
-  staging: "[staging] | ",
-  beta: "[beta] | ",
+  staging: "[STG] | ",
+  beta: "[BETA] | ",
+  dev: "[DEV] | ",
   production: "",
 };
 
