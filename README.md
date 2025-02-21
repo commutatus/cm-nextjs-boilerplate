@@ -7,6 +7,7 @@ These steps need to be performed only once after creating the repository from th
 ### Secrets
 1. Run `npm run create-encryption-keys`. This will generate the `.production.key`, `.staging.key`, and `.development.key` encryption keys
 2. Save all the `*.key` files in a secure location
+3. Add `NEXT_PUBLIC_ENV` for all envs with values used in `src/common/utils/getPageTitle.ts` i.e. `staging`, `production`, and, `dev`
 
 ### Amplify
 1. Create an environment variable `ENV`. This can have only one of these value: `staging` or `prod`
