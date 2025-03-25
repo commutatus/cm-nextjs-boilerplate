@@ -1,41 +1,21 @@
-import {
-  ApolloClient,
-  ApolloLink,
-  from,
-  HttpLink,
-  InMemoryCache,
-} from "@apollo/client";
-import { getApiToken } from "@/common/utils/api";
+"use client";
 
-const graphqlUrl = `${process.env.NEXT_PUBLIC_API_URL}/graphql`;
+import { ApolloClient } from "@apollo/client";
+import { useRef } from "react";
+import { initializeApollo } from "./initialize-apollo";
+import { APOLLO_STATE_PROP_NAME } from "./apollo.constants";
 
-const link = new HttpLink({
-  uri: graphqlUrl,
-});
+type useApolloProps = Partial<{
+  [APOLLO_STATE_PROP_NAME]?: object;
+}>;
 
-const client = new ApolloClient({
-  link: from([authMiddleware(), link]),
-  cache: new InMemoryCache(),
-});
+export function useApollo(pageProps: useApolloProps) {
+  const state = pageProps?.[APOLLO_STATE_PROP_NAME];
+  const apolloClientRef = useRef<ApolloClient<object>>(initializeApollo(state));
 
-function authMiddleware() {
-  return new ApolloLink((operation, forward) => {
-    const token = getApiToken();
+  if (!apolloClientRef.current) {
+    apolloClientRef.current = initializeApollo(state);
+  }
 
-    if (!token) {
-      return forward(operation);
-    }
-
-    // add the authorization to the headers
-    operation.setContext((context: { headers: object }) => ({
-      headers: {
-        authorization: token,
-        ...context.headers,
-      },
-    }));
-
-    return forward(operation);
-  });
+  return apolloClientRef.current;
 }
-
-export default client;
