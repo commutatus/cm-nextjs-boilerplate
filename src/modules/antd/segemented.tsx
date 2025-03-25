@@ -25,6 +25,7 @@ const App: React.FC = () => (
     size="large"
     pagination={{
       onChange: (page) => {
+        // eslint-disable-next-line no-console
         console.log(page);
       },
       pageSize: 3,

@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "@/common/styles/globals.scss";
+import "@/common/styles/globals.css";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { ConfigProvider } from "antd";
 import antdGlobalTheme from "@/common/styles/antdThemeConfig";
-import { ApiProvider } from "@/common/components/api-provider";
 import { getPageTitle } from "@/common/utils/getPageTitle";
+import ApolloClientProvider from "@/apollo/apollo-client-provider";
+import AuthGuard from "@/common/components/auth-guard";
+import { GlobalsProvider } from "@/common/context/globals";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,13 +32,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <ConfigProvider theme={antdGlobalTheme}>
-        <ApiProvider>
-          <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-          >
-            <AntdRegistry>{children}</AntdRegistry>
-          </body>
-        </ApiProvider>
+        {/* TODO: Extract server side Apollo config */}
+        <ApolloClientProvider>
+          <GlobalsProvider>
+            <AuthGuard>
+              <body
+                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+              >
+                <AntdRegistry>{children}</AntdRegistry>
+              </body>
+            </AuthGuard>
+          </GlobalsProvider>
+        </ApolloClientProvider>
       </ConfigProvider>
     </html>
   );

@@ -16,9 +16,10 @@ These steps need to be performed only once after creating the repository from th
 
 ### General
 1. Update project name in `README.md`, `package.json`, and in `src/app/layout.tsx`
-2. Update this Readme with information relevant to the project. [Example of a good readme](https://github.com/commutatus/awesome?tab=readme-ov-file#awesome)
-3. Remove the `First time setup and deployment` section from the Readme
-4. Add token in env file for usage in `apollo.config.js`
+2. Update value of `STORAGE_PREFIX` in `src/common/constants/global.ts`
+3. Add token in env file for usage in `apollo.config.js`
+4. Update this Readme with information relevant to the project. [Example of a good readme](https://github.com/commutatus/awesome?tab=readme-ov-file#awesome)
+5. Remove the `First time setup and deployment` section from the Readme
 
 ## Development prerequisites
 1. `nvm use` to set the correct node version
@@ -33,10 +34,10 @@ These steps need to be performed only once after creating the repository from th
 
 ## Encryption/Decryption flow
 Example to update staging env:
-1. Run `npm run decrypt-staging-env`
+1. Run `npm run decrypt-staging`
 2. Edit `.env.local`
-3. Run `npm run encrypt-staging-env`
+3. Run `npm run encrypt-staging`
 
 ## GraphQL types
-- Use `npm run auto-generate-graphql-types` to automatically generate types for queries and mutations used in project
+- Use `npm run generate-types` to automatically generate types for queries and mutations used in project
 - The generate types are located in `src/generated/graphql.ts`
