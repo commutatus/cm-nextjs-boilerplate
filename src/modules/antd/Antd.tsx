@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import {
   AppstoreOutlined,
@@ -58,7 +56,9 @@ const App: React.FC = () => {
           items={items}
         />
         <Dropdown menu={{ items: [{ key: 1, label: "Hello World" }] }}>
-          <span>Hover me <DownOutlined /></span>
+          <span>
+            Hover me <DownOutlined />
+          </span>
         </Dropdown>
       </Sider>
       <Layout style={{ marginLeft: 200 }}>
