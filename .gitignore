@@ -48,3 +48,4 @@ robots.txt
 yalc.lock
 .yalc
 *.code-workspace
+.npmrc
