@@ -5,7 +5,7 @@ const ENV_PREFIX: Record<string, string> = {
   production: "",
 };
 
-const env = process.env.NEXT_PUBLIC_ENV || "production";
+const env = process.env.NEXT_PUBLIC_APP_ENV || "production";
 const prefix = ENV_PREFIX[env] ?? "";
 
 export function getPageTitle(title: string): string {
