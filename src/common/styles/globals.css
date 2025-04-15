@@ -12,6 +12,14 @@
   }
 }
 
+@theme {
+  --breakpoint-sm: 375px;
+  --breakpoint-md: 600px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1440px;
+  --breakpoint-2xl: 1536px;
+}
+
 body {
   color: var(--foreground);
   background: var(--background);
