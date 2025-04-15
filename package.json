@@ -21,8 +21,7 @@
     "build-sitemap": "next-sitemap",
     "prepare": "husky",
     "generate-types": "graphql-codegen",
-    "npmrc-replace-env": "npmrc-replace-env",
-    "postinstall": "npmrc-replace-env"
+    "npmrc-replace-env": "npmrc-replace-env"
   },
   "dependencies": {
     "@ant-design/cssinjs": "^1.23.0",
