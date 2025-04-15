@@ -21,10 +21,13 @@ These steps need to be performed only once after creating the repository from th
 4. Update this Readme with information relevant to the project. [Example of a good readme](https://github.com/commutatus/awesome?tab=readme-ov-file#awesome)
 5. Remove the `First time setup and deployment` section (including [Secrets](#secrets), [Amplify](#amplify), and [General](#general)) from the Readme
 
-## Development prerequisites
-1. `nvm use` to set the correct node version
-2. `npm run install` to install the dependencies
-3. Get access to the decryption key file from your team members. Paste these files in the root of the repository
+## Installing packages and Initial setup
+1. Get access to the decryption key file from your team members. Paste these files in the root of the repository and then run these commands in order
+2. `nvm install`
+3. `npm i -g @commutatus/cm-env npmrc-replace-env --no-save`
+4. `npm run decrypt-staging`
+5. `npm run npmrc-replace-env`
+6. `npm install`
 
 ## Development flow
 1. `nvm use` to set the correct node version
