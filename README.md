@@ -29,9 +29,14 @@ These steps need to be performed only once after creating the repository from th
 5. `npm run npmrc-replace-env`
 6. `npm install`
 
-## Development flow
+## Development
 1. `nvm use` to set the correct node version
-2. `npm run dev:staging` or `npm run dev:prod`
+2. Use `npm run dev:staging` or `npm run dev:prod` to run local server
+3. For notifications and any other feature that is shared between multiple pages, use [Globals Provider](src/common/context/globals/globals-provider.tsx)
+4. Code should be mobile first. Use breakpoints to add responsiveness: Example: `p-[4px] lg:p-[8px]`
+5. Don't use CSS for hiding/showing elements. Dynamically render those elements instead. Use [useResponsive hook](src/common/hooks/useResponsive.tsx) for components that hide/show based on screen width
+6. [Use page router](https://ant.design/docs/react/v5-for-19)
+
 
 ## Encryption/Decryption flow
 Example to update staging env:
