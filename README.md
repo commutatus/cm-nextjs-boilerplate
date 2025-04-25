@@ -18,8 +18,9 @@ These steps need to be performed only once after creating the repository from th
 1. Update project name in `README.md`, `package.json`, and in `src/app/layout.tsx`
 2. Update value of `STORAGE_PREFIX` in `src/common/constants/global.ts`
 3. Add token in env file for usage in `apollo.config.js`
-4. Update this Readme with information relevant to the project. [Example of a good readme](https://github.com/commutatus/awesome?tab=readme-ov-file#awesome)
-5. Remove the `First time setup and deployment` section (including [Secrets](#secrets), [Amplify](#amplify), and [General](#general)) from the Readme
+4. Update the headers in [customHttp.yml](customHttp.yml)
+5. Update this Readme with information relevant to the project. [Example of a good readme](https://github.com/commutatus/awesome?tab=readme-ov-file#awesome)
+6. Remove the `First time setup and deployment` section (including [Secrets](#secrets), [Amplify](#amplify), and [General](#general)) from the Readme
 
 ## Installing packages and Initial setup
 1. Get access to the decryption key file from your team members. Paste these files in the root of the repository and then run these commands in order
