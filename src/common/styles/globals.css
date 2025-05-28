@@ -12,7 +12,7 @@
   }
 }
 
-@theme {
+@theme static {
   --breakpoint-sm: 375px;
   --breakpoint-md: 600px;
   --breakpoint-lg: 992px;
