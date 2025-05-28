@@ -26,8 +26,8 @@ These steps need to be performed only once after creating the repository from th
 1. Get access to the decryption key file from your team members. Paste these files in the root of the repository and then run these commands in order
 2. `nvm install`
 3. `npm i -g @commutatus/cm-env npmrc-replace-env --no-save`
-4. `npm run decrypt-staging`
-5. `npm run npmrc-replace-env`
+4. `cm-env decrypt staging`
+5. `npmrc-replace-env`
 6. `npm install`
 
 ## Development
