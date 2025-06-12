@@ -2,10 +2,16 @@ import React from "react";
 import { createCache, extractStyle, StyleProvider } from "@ant-design/cssinjs";
 import Document, { Head, Html, Main, NextScript } from "next/document";
 import type { DocumentContext } from "next/document";
+import { IS_PROD } from "@/common/constants/global";
+
+const robotsContent = IS_PROD ? "index,follow" : "noindex,nofollow";
 
 const MyDocument = () => (
   <Html lang="en">
-    <Head />
+    <Head>
+      <meta name="robots" content={robotsContent} />
+      <meta name="googlebot" content={robotsContent} />
+    </Head>
     <body>
       <Main />
       <NextScript />

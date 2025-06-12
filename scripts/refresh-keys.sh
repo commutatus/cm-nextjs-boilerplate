@@ -2,12 +2,13 @@
 
 set -euo pipefail
 
-envs=(dev staging prod)
+envs=(dev staging beta prod)
 
 # TODO: Move this to cm-env
 declare -A key_files=(
   [dev]=".development.key"
   [staging]=".staging.key"
+  [beta]=".beta.key"
   [prod]=".production.key"
 )
 
