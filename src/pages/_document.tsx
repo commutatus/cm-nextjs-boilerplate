@@ -2,9 +2,10 @@ import React from "react";
 import { createCache, extractStyle, StyleProvider } from "@ant-design/cssinjs";
 import Document, { Head, Html, Main, NextScript } from "next/document";
 import type { DocumentContext } from "next/document";
-import { IS_PROD } from "@/common/constants/global";
 
-const robotsContent = IS_PROD ? "index,follow" : "noindex,nofollow";
+const isProd = process.env.NEXT_PUBLIC_APP_ENV === "prod";
+
+const robotsContent = isProd ? "index,follow" : "noindex,nofollow";
 
 const MyDocument = () => (
   <Html lang="en">
