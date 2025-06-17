@@ -12,6 +12,9 @@ frontend:
           elif [ "${ENV}" = "staging" ]; then
             echo $DECRYPTION_KEY_STAGING > .staging.key;
             npm run decrypt-staging;
+          elif [ "${ENV}" = "beta" ]; then
+            echo $DECRYPTION_KEY_BETA > .beta.key;
+            npm run decrypt-beta;
           fi
         - npm run npmrc-replace-env
         - npm install
