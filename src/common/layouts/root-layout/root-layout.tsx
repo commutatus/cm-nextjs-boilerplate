@@ -12,11 +12,9 @@ type Props = {
 const RootLayout: React.FC<Props> = ({ children, isFooterHidden = false }) => {
   return (
     <Layout className={classNames("!min-h-[100dvh]")}>
-      <Layout>
-        <Navbar />
-        <Content>{children}</Content>
-        {!isFooterHidden && <Footer />}
-      </Layout>
+      <Navbar />
+      <Content>{children}</Content>
+      {!isFooterHidden && <Footer />}
     </Layout>
   );
 };
