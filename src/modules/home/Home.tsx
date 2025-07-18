@@ -53,7 +53,7 @@ const Home = () => {
                     "RootLayout - Base page layout structure",
                     "Card - Reusable card component",
                     "Card List Layout - Grid-based listing template",
-                    "Items Module - Complete CRUD interface with search and pagination",
+                    "Items Module - Complete CRUD interface with pagination",
                   ]}
                   renderItem={(item) => <List.Item>{item}</List.Item>}
                   style={{ marginTop: 8 }}

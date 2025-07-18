@@ -16,13 +16,12 @@ type CardsListLayoutPropsType = {
 };
 
 const CardsListLayout = (props: CardsListLayoutPropsType) => {
-  const { cardsListData, scrollable, cardsPerRow } = props;
+  const { cardsListData, scrollable } = props;
 
   return (
     <div
       className={classNames("w-full gap-4", {
-        [`grid lg:grid-cols-${cardsPerRow} md:grid-cols-${cardsPerRow} sm:grid-cols-${cardsPerRow} grid-cols-${cardsPerRow}`]:
-          !scrollable,
+        [`grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1`]: !scrollable,
         "flex overflow-x-scroll": scrollable,
       })}
     >
