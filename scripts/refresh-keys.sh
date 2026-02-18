@@ -2,20 +2,21 @@
 
 set -euo pipefail
 
-envs=(dev staging beta prod)
+envs=(dev staging prod)
 
 # TODO: Move this to cm-env
-declare -A key_files=(
-  [dev]=".development.key"
-  [staging]=".staging.key"
-  [beta]=".beta.key"
-  [prod]=".production.key"
-)
-
 for env in "${envs[@]}"; do
   echo "Refreshing keys for $env environment..."
 
-  key_file=${key_files[$env]}
+  case "$env" in
+    dev) key_file=".development.key" ;;
+    staging) key_file=".staging.key" ;;
+    prod) key_file=".production.key" ;;
+    *)
+      echo "Error: Unknown environment '$env'." >&2
+      exit 1
+      ;;
+  esac
   if [[ ! -f $key_file ]]; then
     echo "Error: Key file '$key_file' for environment '$env' does not exist." >&2
     exit 1
