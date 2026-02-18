@@ -21,14 +21,13 @@ const CardsListLayout = (props: CardsListLayoutPropsType) => {
   return (
     <div
       className={classNames("w-full gap-4", {
-        "grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1":
-          !scrollable,
+        [`grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1`]: !scrollable,
         "flex overflow-x-scroll": scrollable,
       })}
     >
-      {cardsListData.map((cardData: CardDataType) => (
+      {cardsListData?.map((cardData: CardDataType) => (
         <div
-          key={cardData.id}
+          key={cardData?.id}
           className={classNames({ "w-[300px] flex-shrink-0": scrollable })}
         >
           <ProjectCard projectCardData={cardData} />
