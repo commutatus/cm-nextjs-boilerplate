@@ -25,12 +25,11 @@ MyDocument.getInitialProps = async (ctx: DocumentContext) => {
   const originalRenderPage = ctx.renderPage;
   ctx.renderPage = () =>
     originalRenderPage({
-      enhanceApp: (App) => (props) =>
-        (
-          <StyleProvider cache={cache}>
-            <App {...props} />
-          </StyleProvider>
-        ),
+      enhanceApp: (App) => (props) => (
+        <StyleProvider cache={cache}>
+          <App {...props} />
+        </StyleProvider>
+      ),
     });
 
   const initialProps = await Document.getInitialProps(ctx);
@@ -40,7 +39,7 @@ MyDocument.getInitialProps = async (ctx: DocumentContext) => {
     styles: (
       <>
         {initialProps.styles}
-        <style dangerouslySetInnerHTML={{ __html: style }} />
+        <style id="antd" dangerouslySetInnerHTML={{ __html: style }} />
       </>
     ),
   };
