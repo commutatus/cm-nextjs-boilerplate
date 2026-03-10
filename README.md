@@ -37,6 +37,7 @@ These steps need to be performed only once after creating the repository from th
 4. Code should be mobile first. Use breakpoints to add responsiveness: Example: `p-[4px] lg:p-[8px]`
 5. Don't use CSS for hiding/showing elements. Dynamically render those elements instead. Use [useResponsive hook](src/common/hooks/useResponsive.tsx) for components that hide/show based on screen width
 6. [Use page router](https://ant.design/docs/react/v5-for-19)
+7. Uncomment any graphql queries/mutations and update the code around it once apollo client is initialized.
 
 
 ## Encryption/Decryption flow
