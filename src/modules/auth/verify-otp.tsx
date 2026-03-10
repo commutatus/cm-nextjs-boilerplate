@@ -1,5 +1,4 @@
 import { useGlobals } from "@/common/context/globals";
-// import { VERIFY_OTP } from "@/common/graphql/auth";
 import { MutationFunction } from "@apollo/client";
 import { Button, Form, Input, Typography } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
@@ -30,6 +29,8 @@ const VerifyOtp = (props: VerifyOtpProps) => {
   const [form] = Form.useForm<OTPFormValues>();
   const [otpTimeRemaining, setOtpTimeRemaining] =
     useState<number>(OTP_COOLDOWN_SECONDS);
+    
+  // TODO: Uncomment when apollo client is initialized
   // const [verifyOtp, { loading: verifyingOtp }] = useMutation(VERIFY_OTP);
   let verifyOtp: MutationFunction | undefined;
   const verifyingOtp = false;

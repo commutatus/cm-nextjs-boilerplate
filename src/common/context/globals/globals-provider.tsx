@@ -3,7 +3,6 @@
 import { createContext, ReactNode, useCallback, useContext, useMemo, useState } from "react";
 import useAuth from "./useAuth";
 import { notification } from "antd";
-// import { useApolloClient } from "@apollo/client";
 import { AuthPageStates } from "@/modules/auth";
 import useCurrentUser from "./useCurrentUser";
 import { NotificationInstance } from "antd/es/notification/interface";
@@ -23,6 +22,7 @@ type GlobalsContextType = Partial<{
 const GlobalsContext = createContext<GlobalsContextType>({});
 
 export const GlobalsProvider = ({ children }: { children: ReactNode }) => {
+  // TODO: Uncomment when apollo client is initialized
   // const apolloClient = useApolloClient();
   const authContext = useAuth();
   const [notificationApi, notificationContextHolder] =
@@ -40,6 +40,7 @@ export const GlobalsProvider = ({ children }: { children: ReactNode }) => {
     setAuthPageState?.(AuthPageStates.login);
   }, []);
 
+  // TODO: Uncomment when apollo client is initialized
   // const currentUser = useCurrentUser({
   //   authState: authContext.state,
   // });
@@ -54,6 +55,7 @@ export const GlobalsProvider = ({ children }: { children: ReactNode }) => {
 
   const handleLogout = useCallback(() => {
     authContext.logout();
+    // TODO: Uncomment when apollo client is initialized
     // apolloClient.resetStore(); // Clear Apollo cache on logout
     setAuthPageState?.(AuthPageStates.login);
   }, [

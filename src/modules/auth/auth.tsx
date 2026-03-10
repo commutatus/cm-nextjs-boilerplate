@@ -5,8 +5,6 @@ import { useState } from "react";
 import { AuthPageStates } from "./auth-page.types";
 import Login from "./login";
 import VerifyOtp from "./verify-otp";
-// import { useMutation } from "@apollo/client";
-// import { REQUEST_OTP } from "@/common/graphql/auth";
 import Image from "next/image";
 
 const { Text } = Typography;
@@ -14,6 +12,7 @@ const { Text } = Typography;
 const AuthPage = () => {
   const { authPageState, showLogin, showVerifyOtp } = useGlobals();
   const [userEmail, setUserEmail] = useState<string>("");
+  // TODO: Uncomment when apollo client is initialized
   // const [requestOtp, { loading: isRequestingOtp }] = useMutation(REQUEST_OTP);
   const requestOtp = undefined;
   const isRequestingOtp = false;
