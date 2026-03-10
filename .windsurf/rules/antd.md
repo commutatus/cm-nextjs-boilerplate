@@ -1,9 +1,9 @@
 ---
 trigger: model_decision
-description: Rules for using Ant Design (antd) components, theming, and styling with @ant-design/cssinjs.
+description: Rules for using Ant Design (antd) components and styling.
 ---
 # Ant Design (antd)
 
 - Prefer `antd` components for common UI patterns.
-- When working on `antd` components, theming, or `@ant-design/cssinjs`, reference `docs/antd/llms.txt`.
-- Only reference `docs/antd/llms-full.txt` if you need deeper component API details.
+- Use `antd` layout/spacing patterns (e.g., `Space`, `Flex`, `Row`/`Col`) over ad-hoc CSS.
+- For detailed component APIs, Cascade will invoke the `antd-reference` skill automatically.
