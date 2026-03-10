@@ -1,11 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
 import { AuthStatesEnum } from "./useAuth";
 
-export enum UserType {
-  CONSUMER = "CONSUMER",
-  GENERATOR = "GENERATOR",
-}
-
 const GET_CURRENT_USER = gql`
   query CurrentUser {
     currentUser {
@@ -35,15 +30,8 @@ const useCurrentUser = (props: useCurrentUserProps) => {
     return null;
   }
 
-  const userType = currentUser?.generator?.id 
-    ? UserType.GENERATOR 
-    : currentUser?.consumer?.id 
-    ? UserType.CONSUMER 
-    : null;
-
   return {
     data: currentUser,
-    userType,
     ...rest,
   };
 }
