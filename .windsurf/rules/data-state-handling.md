@@ -5,7 +5,7 @@ trigger: always_on
 
 ## Loading States
 - Always handle loading states explicitly before rendering data.
-- For `antd` `Table`, use the built-in `loading` prop — pass the loading state from the Apollo hook directly. Also update the locale to update the message instead of the default "Data is empty".
+- For `antd` `Table`, use the built-in `loading` prop — pass the loading state from the Apollo hook directly. Also update the locale to customise the emptyText instead of the default "No Data" message.
 - For other components, show a loading indicator (e.g., `antd` `Spin` or `Skeleton`) while queries are in progress.
 - Never render data-dependent UI until loading is complete.
 - Use the loading state returned by Apollo hooks (`useQuery`, `useMutation`) — do not define separate loading state.
