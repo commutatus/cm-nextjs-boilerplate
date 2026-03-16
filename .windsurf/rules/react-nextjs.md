@@ -1,6 +1,6 @@
 ---
 trigger: glob
-globs: **/*.tsx, **/*.jsx
+globs: "**/*.tsx, **/*.jsx"
 ---
 # React / Next.js (Web)
 

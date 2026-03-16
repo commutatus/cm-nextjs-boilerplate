@@ -1,5 +1,6 @@
 ---
-trigger: always_on
+trigger: glob
+globs: "**/*.tsx, **/*.jsx"
 ---
 # Data State Handling (Loading, Empty, Error)
 
