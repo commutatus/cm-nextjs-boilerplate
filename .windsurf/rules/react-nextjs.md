@@ -1,5 +1,6 @@
 ---
-trigger: always_on
+trigger: glob
+globs: **/*.tsx, **/*.jsx
 ---
 # React / Next.js (Web)
 
