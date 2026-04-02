@@ -10,7 +10,7 @@ trigger: always_on
 - Write scalable, readable code; prefer descriptive code over succinct code.
 - Do not duplicate code; extract common logic into functions, components, or custom hooks.
 - Avoid writing custom code for complex operations; use external libraries instead.
-- Use the `pluralize` package to handle pluralization of words based on quantity. If not already installed, install it.
+- Use the `pluralize` package to handle pluralization of words based on quantity.
 
 ## JavaScript style
 - Avoid chaining ternary operators.
