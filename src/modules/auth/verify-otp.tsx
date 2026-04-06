@@ -12,6 +12,7 @@ type VerifyOtpProps = {
   requestOtp?: MutationFunction;
   isRequestingOtp?: boolean;
   isModal?: boolean;
+  onAuthSuccess?: () => void;
 };
 
 const OTP_COOLDOWN_SECONDS = 30;
@@ -26,7 +27,14 @@ interface OTPFormValues {
   otp: string;
 }
 
-const VerifyOtp = ({ isModal, isRequestingOtp, requestOtp, userEmail, showLogin, }: VerifyOtpProps) => {
+const VerifyOtp = ({
+  isModal,
+  isRequestingOtp,
+  requestOtp,
+  userEmail,
+  showLogin,
+  onAuthSuccess,
+}: VerifyOtpProps) => {
   const [form] = Form.useForm<OTPFormValues>();
   const [otpTimeRemaining, setOtpTimeRemaining] =
     useState<number>(OTP_COOLDOWN_SECONDS);
@@ -80,6 +88,7 @@ const VerifyOtp = ({ isModal, isRequestingOtp, requestOtp, userEmail, showLogin,
           accessToken,
           refreshToken,
         });
+        onAuthSuccess?.();
         notificationApi?.success({
           message: "Login successful",
         });

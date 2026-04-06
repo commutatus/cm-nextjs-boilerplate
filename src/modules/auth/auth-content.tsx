@@ -12,9 +12,11 @@ const { Text } = Typography;
 const AuthContent = ({
   className,
   isModal = false,
+  onAuthSuccess,
 }: {
   className?: string;
   isModal?: boolean;
+  onAuthSuccess?: () => void;
 }) => {
   const { authPageState, showLogin, showVerifyOtp } = useGlobals();
   const [userEmail, setUserEmail] = useState("");
@@ -52,6 +54,7 @@ const AuthContent = ({
               userEmail={userEmail}
               showLogin={showLogin}
               isModal={isModal}
+              onAuthSuccess={onAuthSuccess}
             />
           )}
       </Card>

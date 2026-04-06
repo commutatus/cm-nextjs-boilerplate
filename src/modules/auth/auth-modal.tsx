@@ -4,16 +4,20 @@ import { useState } from "react";
 
 const AuthModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
   
   return (
     <>
       <Button onClick={() => setIsModalOpen(true)} type="primary">Login</Button>
       <Modal
         open={isModalOpen}
-        onCancel={() => setIsModalOpen(false)}
+        onCancel={handleCloseModal}
         footer={null}
       >
-        <AuthContent isModal />
+        <AuthContent isModal onAuthSuccess={handleCloseModal} />
       </Modal>
     </>
   )
