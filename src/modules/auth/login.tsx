@@ -19,7 +19,6 @@ const Login = (props: LoginProps) => {
 
   const handleSendOtp = (values: { email: string }) => {
     setUserEmail?.(values.email);
-    props.showVerifyOtp?.();
     props
       .requestOtp?.({
         variables: {
