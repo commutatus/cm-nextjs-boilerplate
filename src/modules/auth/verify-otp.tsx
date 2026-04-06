@@ -11,6 +11,7 @@ type VerifyOtpProps = {
   showLogin?: () => void;
   requestOtp?: MutationFunction;
   isRequestingOtp?: boolean;
+  isModal?: boolean;
 };
 
 const OTP_COOLDOWN_SECONDS = 30;
@@ -25,7 +26,7 @@ interface OTPFormValues {
   otp: string;
 }
 
-const VerifyOtp = (props: VerifyOtpProps) => {
+const VerifyOtp = ({ isModal, isRequestingOtp, requestOtp, userEmail, showLogin, }: VerifyOtpProps) => {
   const [form] = Form.useForm<OTPFormValues>();
   const [otpTimeRemaining, setOtpTimeRemaining] =
     useState<number>(OTP_COOLDOWN_SECONDS);
@@ -53,13 +54,13 @@ const VerifyOtp = (props: VerifyOtpProps) => {
 
   const handleVerifyOtp = (values: OTPFormValues) => {
     const otpToVerify = values.otp;
-    if (!otpToVerify || !props.userEmail) {
+    if (!otpToVerify || !userEmail) {
       return;
     }
 
     const variables = {
       input: {
-        email: props.userEmail,
+        email: userEmail,
         otp: otpToVerify,
       },
     };
@@ -96,15 +97,14 @@ const VerifyOtp = (props: VerifyOtpProps) => {
   };
 
   const handleRequestOtp = () => {
-    if (!props.requestOtp || props.isRequestingOtp || !props.userEmail) {
+    if (!requestOtp || isRequestingOtp || !userEmail) {
       return;
     }
 
-    props
-      .requestOtp({
+    requestOtp({
         variables: {
           input: {
-            email: props.userEmail,
+            email: userEmail,
           },
         },
       })
@@ -126,21 +126,25 @@ const VerifyOtp = (props: VerifyOtpProps) => {
       onFinish={handleVerifyOtp}
       form={form}
     >
-      <Button
-        type="text"
-        icon={<ArrowLeftOutlined />}
-        onClick={props.showLogin}
-        className="!text-gray-500 hover:!text-gray-700 mb-4 mr-auto"
-        size="small"
-      >
-        Back
-      </Button>
+      {
+        !isModal && (
+          <Button
+            type="text"
+            icon={<ArrowLeftOutlined />}
+            onClick={showLogin}
+            className="!text-gray-500 hover:!text-gray-700 mb-4 mr-auto"
+            size="small"
+          >
+            Back
+          </Button>
+        )
+      }
       <div className="text-center mb-2">
         <Title level={4} className="text-center">
           Enter verification code
         </Title>
         <Text className="text-gray-500">
-          We sent a code to <strong>{props.userEmail}</strong>
+          We sent a code to <strong>{userEmail}</strong>. <Button type="link" onClick={showLogin} className="p-0!">Not you?</Button>
         </Text>
       </div>
       <Form.Item

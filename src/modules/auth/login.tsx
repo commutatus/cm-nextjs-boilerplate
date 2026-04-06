@@ -10,6 +10,7 @@ type LoginProps = {
   showVerifyOtp?: () => void;
   requestOtp?: MutationFunction;
   isRequestingOtp?: boolean;
+  isModal?: boolean;
 };
 
 const Login = (props: LoginProps) => {
@@ -78,6 +79,14 @@ const Login = (props: LoginProps) => {
           Send OTP
         </Button>
       </Form.Item>
+
+      <div className="text-center text-gray-500 text-sm mt-4">
+        By continuing, you agree to our{" "}
+        <a href="#" className="text-blue-600 underline!">
+          terms & conditions
+        </a>
+        .
+      </div>
     </Form>
   );
 };
