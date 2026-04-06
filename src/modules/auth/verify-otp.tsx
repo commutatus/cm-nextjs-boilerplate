@@ -30,8 +30,6 @@ const VerifyOtp = (props: VerifyOtpProps) => {
   const [otpTimeRemaining, setOtpTimeRemaining] =
     useState<number>(OTP_COOLDOWN_SECONDS);
     
-  // TODO: Uncomment when apollo client is initialized
-  // const [verifyOtp, { loading: verifyingOtp }] = useMutation(VERIFY_OTP);
   let verifyOtp: MutationFunction | undefined;
   const verifyingOtp = false;
   const { notificationApi, auth } = useGlobals();

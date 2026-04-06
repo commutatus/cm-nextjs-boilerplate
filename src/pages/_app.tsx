@@ -1,11 +1,6 @@
-import { GlobalsProvider } from "@/common/context/globals";
 import "@/common/styles/globals.css";
 import type { AppProps } from "next/app";
 
 export default function App({ Component, pageProps }: AppProps) {
-  return (
-    <GlobalsProvider>
-      <Component {...pageProps} />
-    </GlobalsProvider>
-  );
+  return <Component {...pageProps} />;
 }

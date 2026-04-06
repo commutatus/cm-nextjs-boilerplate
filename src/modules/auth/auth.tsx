@@ -12,10 +12,6 @@ const { Text } = Typography;
 const AuthPage = () => {
   const { authPageState, showLogin, showVerifyOtp } = useGlobals();
   const [userEmail, setUserEmail] = useState<string>("");
-  // TODO: Uncomment when apollo client is initialized
-  // const [requestOtp, { loading: isRequestingOtp }] = useMutation(REQUEST_OTP);
-  const requestOtp = undefined;
-  const isRequestingOtp = false;
 
   return (
     <RootLayout
@@ -43,15 +39,11 @@ const AuthPage = () => {
                   userEmail={userEmail}
                   setUserEmail={setUserEmail}
                   showVerifyOtp={showVerifyOtp}
-                  requestOtp={requestOtp}
-                  isRequestingOtp={isRequestingOtp}
                 />
               ) : (
                 <VerifyOtp
                   userEmail={userEmail}
                   showLogin={showLogin}
-                  requestOtp={requestOtp}
-                  isRequestingOtp={isRequestingOtp}
                 />
               )}
           </Card>

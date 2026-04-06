@@ -6,6 +6,7 @@ import { notification } from "antd";
 import { AuthPageStates } from "@/modules/auth";
 import useCurrentUser from "./useCurrentUser";
 import { NotificationInstance } from "antd/es/notification/interface";
+import { useApolloClient } from "@apollo/client";
 
 type GlobalsContextType = Partial<{
   auth: ReturnType<typeof useAuth>;
@@ -22,8 +23,7 @@ type GlobalsContextType = Partial<{
 const GlobalsContext = createContext<GlobalsContextType>({});
 
 export const GlobalsProvider = ({ children }: { children: ReactNode }) => {
-  // TODO: Uncomment when apollo client is initialized
-  // const apolloClient = useApolloClient();
+  const apolloClient = useApolloClient();
   const authContext = useAuth();
   const [notificationApi, notificationContextHolder] =
     notification.useNotification();
@@ -40,13 +40,10 @@ export const GlobalsProvider = ({ children }: { children: ReactNode }) => {
     setAuthPageState?.(AuthPageStates.login);
   }, []);
 
-  // TODO: Uncomment when apollo client is initialized
-  // const currentUser = useCurrentUser({
-  //   authState: authContext.state,
-  // });
-
-  const currentUser = undefined;
-
+  const currentUser = useCurrentUser({
+    authState: authContext.state,
+  });
+  
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   const toggleSidebarCollapse = useCallback(() => {
@@ -55,12 +52,11 @@ export const GlobalsProvider = ({ children }: { children: ReactNode }) => {
 
   const handleLogout = useCallback(() => {
     authContext.logout();
-    // TODO: Uncomment when apollo client is initialized
-    // apolloClient.resetStore(); // Clear Apollo cache on logout
+    apolloClient.resetStore(); // Clear Apollo cache on logout
     setAuthPageState?.(AuthPageStates.login);
   }, [
     authContext, 
-    // apolloClient, 
+    apolloClient,
     setAuthPageState
   ]);
 
