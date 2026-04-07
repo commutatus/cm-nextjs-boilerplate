@@ -36,3 +36,8 @@ export const sampleCardData = [
     description: "This is card 2 description.",
   },
 ];
+
+export enum RoutePaths {
+  HOME = "/",
+}
+
