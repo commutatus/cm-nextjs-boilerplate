@@ -1,6 +1,4 @@
 // Rename this card component as per your project/design card name
-"use client";
-
 import { HeartOutlined } from "@ant-design/icons";
 import { Button, Card, Typography } from "antd";
 import Image from "next/image";
@@ -29,6 +27,7 @@ const ProjectCard = (props: ProjectCardPropsType) => {
             src={projectCardData.image}
             alt={projectCardData.title}
             className="object-cover rounded-t-lg"
+            loading="lazy"
           />
         </div>
       }
