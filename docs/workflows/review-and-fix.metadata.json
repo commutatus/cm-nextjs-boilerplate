@@ -1,6 +1,6 @@
 {
   "workflow": "review-and-fix",
-  "defaultBaseBranch": "",
+  "defaultBaseBranch": "main",
   "defaultReviewers": ["gpalsingh", "mikevic"],
   "notes": "Fill in any defaults you want the workflow to reuse across runs."
 }
