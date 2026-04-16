@@ -122,7 +122,7 @@ Check `.windsurf/workflows/outputs/review-comments.md`.
 
 If there are no remaining items with status `open` (i.e. all items are marked `fixed` or `wontfix`), stop the loop and proceed to Step 7.
 
-Otherwise, return to Step 5 to continue addressing open items.
+Otherwise, return to Step 4 to continue the review loop.
 
 ---
 
