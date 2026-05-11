@@ -41,7 +41,7 @@ Identify high-confidence issues only.
 
 Append to the file (create if it does not exist):
 
-`.windsurf/workflows/outputs/review-comments.md`
+`.windsurf/outputs/review-and-fix/review-comments.md`
 
 Follow the canonical schema in:
 

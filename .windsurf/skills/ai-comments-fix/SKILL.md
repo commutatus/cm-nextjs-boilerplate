@@ -9,7 +9,7 @@ Read the local comments file and drive an interactive Fix/Wontfix loop until all
 
 This skill must:
 
-- Read `.windsurf/workflows/outputs/review-comments.md`
+- Read `.windsurf/outputs/review-and-fix/review-comments.md`
 - Process all items regardless of `Source` (both `local` and `github` items)
 - For each item with status `open`, ask the user whether to **Fix** or **Wontfix** (Wontfix requires a reason)
 - If fixing, implement the code change using edit tools
@@ -20,7 +20,7 @@ This skill must:
 
 Open and parse:
 
-- `.windsurf/workflows/outputs/review-comments.md`
+- `.windsurf/outputs/review-and-fix/review-comments.md`
 
 Follow the canonical schema in:
 

@@ -31,8 +31,10 @@ If any output is returned, tell the user to commit or stash local changes and st
 
 Ensure the workflow output directory exists:
 
+This workflow stores its generated artifacts under `.windsurf/outputs/review-and-fix/`
+
 ```bash
-mkdir -p .windsurf/workflows/outputs
+mkdir -p .windsurf/outputs/review-and-fix
 ```
 
 // turbo
@@ -79,7 +81,7 @@ gh repo view --json owner -q .owner.login
 
 - `mcp0_list_pull_requests` with `head` set to `<owner>:<branch_name>`
 
-If a PR exists, create/overwrite `.windsurf/workflows/outputs/pr-context.json` with:
+If a PR exists, create/overwrite `.windsurf/outputs/review-and-fix/pr-context.json` with:
 
 - `prNumber`
 - `prSource`: `github`
@@ -92,11 +94,11 @@ If no PR exists, proceed to Step 4.
 
 ## Step 3: Fetch PR Comments
 
-If `.windsurf/workflows/outputs/pr-context.json` exists, read `prNumber` from it and invoke the `fetch-pr-comments` skill.
+If `.windsurf/outputs/review-and-fix/pr-context.json` exists, read `prNumber` from it and invoke the `fetch-pr-comments` skill.
 
-This skill must fetch PR comments only once and append them to `.windsurf/workflows/outputs/review-comments.md` (create the file if it does not exist).
+This skill must fetch PR comments only once and append them to `.windsurf/outputs/review-and-fix/review-comments.md` (create the file if it does not exist).
 
-If `.windsurf/workflows/outputs/pr-context.json` does not exist, skip this step.
+If `.windsurf/outputs/review-and-fix/pr-context.json` does not exist, skip this step.
 
 ---
 
@@ -104,7 +106,7 @@ If `.windsurf/workflows/outputs/pr-context.json` does not exist, skip this step.
 
 Invoke the `ai-code-review` skill.
 
-This skill's sole purpose is to run a local PR-style code review and append findings to `.windsurf/workflows/outputs/review-comments.md` (create the file if it does not exist). If the file already exists, avoid duplicating any comments that are already present.
+This skill's sole purpose is to run a local PR-style code review and append findings to `.windsurf/outputs/review-and-fix/review-comments.md` (create the file if it does not exist). If the file already exists, avoid duplicating any comments that are already present.
 
 ---
 
@@ -112,13 +114,13 @@ This skill's sole purpose is to run a local PR-style code review and append find
 
 Invoke the `ai-comments-fix` skill.
 
-This skill must iterate over `.windsurf/workflows/outputs/review-comments.md` and guide the user through Fix/Wontfix decisions, applying fixes and updating the file until there are no remaining open items.
+This skill must iterate over `.windsurf/outputs/review-and-fix/review-comments.md` and guide the user through Fix/Wontfix decisions, applying fixes and updating the file until there are no remaining open items.
 
 ---
 
 ## Step 6: Review Loop
 
-Check `.windsurf/workflows/outputs/review-comments.md`.
+Check `.windsurf/outputs/review-and-fix/review-comments.md`.
 
 If there are no remaining items with status `open` (i.e. all items are marked `fixed` or `wontfix`), stop the loop and proceed to Step 7.
 
@@ -138,9 +140,9 @@ git add <modified_files>
 
 Do not stage or commit any workflow output files:
 
-- `.windsurf/workflows/outputs/review-comments.md`
-- `.windsurf/workflows/outputs/pr-body.md`
-- `.windsurf/workflows/outputs/pr-context.json`
+- `.windsurf/outputs/review-and-fix/review-comments.md`
+- `.windsurf/outputs/review-and-fix/pr-body.md`
+- `.windsurf/outputs/review-and-fix/pr-context.json`
 
 Before committing, verify the staged files do not include these paths:
 
@@ -180,36 +182,26 @@ git push --force-with-lease
 
 ## Step 9: Create PR
 
-If `.windsurf/workflows/outputs/pr-context.json` exists, move to step 10. Otherwise, create a PR:
+If `.windsurf/outputs/review-and-fix/pr-context.json` exists, move to step 10. Otherwise, create a PR:
 
 Create the PR using the `create-pull-request` skill:
 
 Record the PR number for the remaining steps.
 
-Create/overwrite `.windsurf/workflows/outputs/pr-context.json` with:
+Create/overwrite `.windsurf/outputs/review-and-fix/pr-context.json` with:
 
 - `prNumber`
 - `prSource`: `workflow`
 
 ---
 
-## Step 10: Post Task Link Comment
+## Step 10: Mark Resolved Comments on GitHub
 
-If `prSource` in `.windsurf/workflows/outputs/pr-context.json` is not `workflow`, skip this step.
-
-Add a comment to the PR using `mcp0_add_issue_comment` containing this markdown link:
-
-`[<branch-name>](https://bridge.commutatus.com/cm_admin/tasks/<branch-name>)`
-
----
-
-## Step 11: Mark Resolved Comments on GitHub
-
-If `prSource` in `.windsurf/workflows/outputs/pr-context.json` is `workflow`, skip this step.
+If `prSource` in `.windsurf/outputs/review-and-fix/pr-context.json` is `workflow`, skip this step.
 
 ### Inline Review Comments
 
-If `.windsurf/workflows/outputs/review-comments.md` does not exist or has no items with `Source: github`, skip this step.
+If `.windsurf/outputs/review-and-fix/review-comments.md` does not exist or has no items with `Source: github`, skip this step.
 
 Use the `ThreadId` column from items with `Source: github` (per `docs/workflows/review-comments.schema.md`) when resolving threads.
 
@@ -228,7 +220,7 @@ Multiple threads can be resolved in a single mutation by using aliases (t1, t2, 
 
 ---
 
-## Step 12: Post Summary Comment
+## Step 11: Post Summary Comment
 
 Post a run marker + summary comment on the PR using `mcp0_add_issue_comment`.
 
@@ -246,7 +238,7 @@ Include a clear marker at the top so reviewers know the workflow was run:
 
 Then include a markdown body containing:
 
-If `.windsurf/workflows/outputs/review-comments.md` exists and has items with `Source: github`, include:
+If `.windsurf/outputs/review-and-fix/review-comments.md` exists and has items with `Source: github`, include:
 
 - **Inline Review Comments** — table with items where `Source: github` and `Kind: inline`, showing reviewer, file, comment, and status (✅ Fixed / 🚫 Wontfix)
 - **General PR Comments** — table with items where `Source: github` and `Kind: general`, showing reviewer, comment, and status
@@ -259,25 +251,24 @@ Always include:
 
 ---
 
-## Step 13: Request Human Review
+## Step 12: Request Human Review
 
 Request review using the GitHub MCP server:
 
 - Load `defaultReviewers` from `docs/workflows/review-and-fix.metadata.json`
-- Read the PR number from `.windsurf/workflows/outputs/pr-context.json`
+- Read the PR number from `.windsurf/outputs/review-and-fix/pr-context.json`
 - Use `mcp0_pull_request_read` to get PR details and determine the PR author
 - If the PR author is in `defaultReviewers`, remove them from the reviewers list
 - Use `mcp0_update_pull_request` with the PR number and `reviewers` set to the filtered `defaultReviewers`
 
 ---
 
-## Step 14: Cleanup
+## Step 13: Cleanup
 
 Delete any review output files generated during this workflow:
 
 ```bash
-rm -f .windsurf/workflows/outputs/pr-body.md .windsurf/workflows/outputs/pr-context.json
-rm -f .windsurf/workflows/outputs/review-comments.md
+rm -f .windsurf/outputs/review-and-fix/
 ```
 
 ---

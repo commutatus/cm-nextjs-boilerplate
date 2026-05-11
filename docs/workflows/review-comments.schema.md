@@ -13,7 +13,7 @@ This document defines the canonical markdown schema for review comment files pro
 
 ## Files
 
-- `.windsurf/workflows/outputs/review-comments.md` — review comments for the current workflow pass
+- `.windsurf/outputs/review-and-fix/review-comments.md` — review comments for the current workflow pass
 
 ## Required Frontmatter Section
 

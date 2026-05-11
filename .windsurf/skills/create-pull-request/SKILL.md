@@ -54,16 +54,16 @@ Use the following company PR template. Remove any sections that are not relevant
 3. **How were the changes done?** — Highlight key design decisions from the diff (e.g. new patterns, libraries, architectural choices)
 4. **How was testing done?** — Check for test files in the diff. If none, note that and ask the user
 5. **Screenshots/Recording** — Skip unless the user provides them
-6. **AI Code Review Summary** — If `.windsurf/workflows/outputs/review-comments.md` exists, include relevant items + summary from it. If no review comments exist, remove this section
+6. **AI Code Review Summary** — If `.windsurf/outputs/review-and-fix/review-comments.md` exists, include relevant items + summary from it. If no review comments exist, remove this section
 7. **Anything Else?** — Note any technical debt, trade-offs, or follow-up work identified during review
 
 ## PR Creation (MCP)
 
-1. Always write the PR body to a temp file at `.windsurf/workflows/outputs/pr-body.md` first
+1. Always write the PR body to a temp file at `.windsurf/outputs/review-and-fix/pr-body.md` first
 2. Use `mcp0_create_pull_request` with:
    - `head`: current branch
    - `base`: base branch (e.g. `main`)
-3. Use the generated PR title and the contents of `.windsurf/workflows/outputs/pr-body.md` as the PR title/body
+3. Use the generated PR title and the contents of `.windsurf/outputs/review-and-fix/pr-body.md` as the PR title/body
 
 ## Guidelines
 

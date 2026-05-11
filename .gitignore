@@ -49,3 +49,6 @@ yalc.lock
 .yalc
 *.code-workspace
 .npmrc
+
+# windsurf
+/.windsurf/outputs/
