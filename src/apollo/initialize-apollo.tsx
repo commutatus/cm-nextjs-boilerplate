@@ -1,10 +1,9 @@
 import {
   ApolloClient,
   ApolloLink,
-  from,
   HttpLink,
   InMemoryCache,
-} from "@apollo/client";
+} from "@apollo/client/core";
 import {
   getAccessToken,
   getRefreshToken,
@@ -14,7 +13,7 @@ import {
 } from "@/common/utils/api";
 import merge from "deepmerge";
 import isEqual from "lodash.isequal";
-import { onError } from "@apollo/client/link/error";
+import { ErrorLink } from "@apollo/client/link/error";
 import {
   RefreshAccessTokenMutation,
   RefreshAccessTokenMutationVariables,
@@ -26,11 +25,23 @@ import {
 } from "./apollo.constants";
 import { REFRESH_TOKEN_MUTATION } from "@/common/graphql/auth";
 
+interface GraphQLError {
+  message: string;
+  path?: readonly (string | number)[];
+  extensions?: Record<string, unknown>;
+}
+
+interface ErrorHandlerOptions {
+  networkError?: Error & { result?: { sub_code?: string } };
+  graphQLErrors?: readonly GraphQLError[];
+  operation?: { operationName?: string };
+}
+
 const apiLink = new HttpLink({
   uri: GRAPHQL_URL,
 });
 
-let client: ApolloClient<object>;
+let client: ApolloClient;
 
 let isRefreshingToken = false;
 const ignoreErrorsForOperations: string[] = [];
@@ -40,7 +51,7 @@ function authMiddleware() {
     const token = getAccessToken();
 
     const skipTokenHeaders = NO_TOKEN_OPERATIONS.includes(
-      operation.operationName
+      operation.operationName || ""
     );
 
     const shouldAuthenticate = token && !skipTokenHeaders;
@@ -77,7 +88,7 @@ async function refreshTokens() {
   });
 }
 
-const errorLink = onError(({ networkError, graphQLErrors }) => {
+const errorHandler = ({ networkError, graphQLErrors }: ErrorHandlerOptions): void => {
   const isClientSide = typeof window !== "undefined";
 
   if (!isClientSide || isRefreshingToken) {
@@ -100,7 +111,7 @@ const errorLink = onError(({ networkError, graphQLErrors }) => {
     errorMessages.push(typedNetworkError.message);
   }
 
-  graphQLErrors?.forEach?.((error) => {
+  graphQLErrors?.forEach?.((error: GraphQLError) => {
     subCodes.push(error.extensions?.sub_code);
 
     const ignoreError = ignoreErrorsForOperations.some((operation) =>
@@ -149,11 +160,13 @@ const errorLink = onError(({ networkError, graphQLErrors }) => {
         window.location.reload();
       }
     });
-});
+};
+
+const errorLink = new ErrorLink(errorHandler);
 
 const createApolloClient = () => {
   return new ApolloClient({
-    link: from([errorLink, authMiddleware(), apiLink]),
+    link: ApolloLink.from([errorLink, authMiddleware(), apiLink]),
     cache: new InMemoryCache(),
   });
 };
@@ -170,7 +183,7 @@ export function initializeApollo(
 
     // Merge the initialState from getStaticProps/getServerSideProps
     // in the existing cache
-    const data: object | null | undefined = merge(existingCache, initialState, {
+    const data: object | null | undefined = merge(existingCache as object, initialState as object, {
       // combine arrays using object equality (like in sets)
       arrayMerge: (destinationArray, sourceArray) => [
         ...sourceArray,

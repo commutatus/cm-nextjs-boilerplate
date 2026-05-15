@@ -1,6 +1,9 @@
 import { useGlobals } from "@/common/context/globals";
-import { MutationFunction } from "@apollo/client";
 import { Button, Form, Input, Typography } from "antd";
+
+type MutationFunction<TVariables = unknown> = (
+  options?: { variables?: TVariables; [key: string]: unknown }
+) => Promise<{ data?: Record<string, unknown>; [key: string]: unknown }>;
 
 const { Title } = Typography;
 
@@ -8,7 +11,7 @@ type LoginProps = {
   userEmail?: string;
   setUserEmail?: (email: string) => void;
   showVerifyOtp?: () => void;
-  requestOtp?: MutationFunction;
+  requestOtp?: MutationFunction<{ input: { email: string } }>;
   isRequestingOtp?: boolean;
   isModal?: boolean;
 };
@@ -31,7 +34,7 @@ const Login = (props: LoginProps) => {
       .then(() => {
         props.showVerifyOtp?.();
       })
-      .catch((error) => {
+      .catch((error: { message?: string }) => {
         notificationApi?.error({
           message: "Error",
           description: error.message,

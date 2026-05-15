@@ -1,15 +1,18 @@
 import { useGlobals } from "@/common/context/globals";
-import { MutationFunction } from "@apollo/client";
 import { Button, Form, Input, Typography } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
+
+type MutationFunction<TVariables = unknown> = (
+  options?: { variables?: TVariables; [key: string]: unknown }
+) => Promise<{ data?: Record<string, unknown>; [key: string]: unknown }>;
 
 const { Text, Title } = Typography;
 
 type VerifyOtpProps = {
   userEmail?: string;
   showLogin?: () => void;
-  requestOtp?: MutationFunction;
+  requestOtp?: MutationFunction<{ input: { email: string } }>;
   isRequestingOtp?: boolean;
   isModal?: boolean;
   onAuthSuccess?: () => void;
@@ -39,7 +42,7 @@ const VerifyOtp = ({
   const [otpTimeRemaining, setOtpTimeRemaining] =
     useState<number>(OTP_COOLDOWN_SECONDS);
     
-  let verifyOtp: MutationFunction | undefined;
+  let verifyOtp: MutationFunction<{ input: { email: string; otp: string } }> | undefined;
   const verifyingOtp = false;
   const { notificationApi, auth } = useGlobals();
 
@@ -76,8 +79,8 @@ const VerifyOtp = ({
     verifyOtp?.({
       variables,
     })
-      .then((res) => {
-        const { accessToken, refreshToken } = res.data?.verifyOtp ?? {};
+      .then((res: { data?: Record<string, unknown> }) => {
+        const { accessToken, refreshToken } = (res.data?.verifyOtp as { accessToken?: string; refreshToken?: string }) ?? {};
         if (!accessToken) {
           notificationApi?.error({
             message: "Invalid OTP. Please try again.",
@@ -93,10 +96,10 @@ const VerifyOtp = ({
           message: "Login successful",
         });
       })
-      .catch((error) => {
+      .catch((error: { message?: string }) => {
         const message =
-          error?.cause?.message ??
-          error?.message ??
+          (error as { cause?: { message?: string }; message?: string })?.cause?.message ??
+          (error as { message?: string })?.message ??
           "An error occurred during OTP verification.";
 
         notificationApi?.error({
@@ -117,7 +120,7 @@ const VerifyOtp = ({
           },
         },
       })
-      .catch((error) => {
+      .catch((error: { message?: string }) => {
         notificationApi?.error({
           message: error?.message ?? "Failed to request OTP. Please try again.",
         });
