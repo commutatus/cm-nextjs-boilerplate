@@ -6,7 +6,7 @@ import { notification } from "antd";
 import { AuthPageStates } from "@/modules/auth";
 import useCurrentUser from "./useCurrentUser";
 import { NotificationInstance } from "antd/es/notification/interface";
-import { useApolloClient } from "@apollo/client";
+import { useApolloClient } from "@apollo/client/react";
 
 type GlobalsContextType = Partial<{
   auth: ReturnType<typeof useAuth>;

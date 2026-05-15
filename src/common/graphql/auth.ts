@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from "@apollo/client/core";
 
 // It is the most common auth mutations, update/remove it depending on the project.
 

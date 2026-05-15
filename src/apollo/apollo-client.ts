@@ -1,6 +1,6 @@
 "use client";
 
-import { ApolloClient } from "@apollo/client";
+import { ApolloClient } from "@apollo/client/core";
 import { useRef } from "react";
 import { initializeApollo } from "./initialize-apollo";
 import { APOLLO_STATE_PROP_NAME } from "./apollo.constants";
@@ -11,7 +11,7 @@ type useApolloProps = Partial<{
 
 export function useApollo(pageProps: useApolloProps) {
   const state = pageProps?.[APOLLO_STATE_PROP_NAME];
-  const apolloClientRef = useRef<ApolloClient<object>>(initializeApollo(state));
+  const apolloClientRef = useRef<ApolloClient>(initializeApollo(state));
 
   if (!apolloClientRef.current) {
     apolloClientRef.current = initializeApollo(state);
