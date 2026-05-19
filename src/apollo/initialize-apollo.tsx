@@ -4,6 +4,8 @@ import {
   HttpLink,
   InMemoryCache,
 } from "@apollo/client/core";
+import { CombinedGraphQLErrors } from "@apollo/client/errors";
+import { notification } from "antd";
 import {
   getAccessToken,
   getRefreshToken,
@@ -24,18 +26,6 @@ import {
   TOKEN_EXPIRED_SUB_CODES,
 } from "./apollo.constants";
 import { REFRESH_TOKEN_MUTATION } from "@/common/graphql/auth";
-
-interface GraphQLError {
-  message: string;
-  path?: readonly (string | number)[];
-  extensions?: Record<string, unknown>;
-}
-
-interface ErrorHandlerOptions {
-  networkError?: Error & { result?: { sub_code?: string } };
-  graphQLErrors?: readonly GraphQLError[];
-  operation?: { operationName?: string };
-}
 
 const apiLink = new HttpLink({
   uri: GRAPHQL_URL,
@@ -88,40 +78,42 @@ async function refreshTokens() {
   });
 }
 
-const errorHandler = ({ networkError, graphQLErrors }: ErrorHandlerOptions): void => {
+const errorHandler: ErrorLink.ErrorHandler = ({ error }): void => {
   const isClientSide = typeof window !== "undefined";
 
   if (!isClientSide || isRefreshingToken) {
     return;
   }
 
-  const subCodes = [];
-  const errorMessages = [];
+  const subCodes: (string | undefined)[] = [];
+  const errorMessages: string[] = [];
 
-  const typedNetworkError = networkError as {
-    result?: { sub_code?: string };
-    message?: string;
-  };
-  const subCode = typedNetworkError?.result?.sub_code;
-  if (subCode) {
-    subCodes.push(subCode);
-  }
-
-  if (typedNetworkError?.message) {
-    errorMessages.push(typedNetworkError.message);
-  }
-
-  graphQLErrors?.forEach?.((error: GraphQLError) => {
-    subCodes.push(error.extensions?.sub_code);
-
-    const ignoreError = ignoreErrorsForOperations.some((operation) =>
-      error.path?.includes(operation)
-    );
-
-    if (error.message && !ignoreError) {
-      errorMessages.push(error.message);
+  if (CombinedGraphQLErrors.is(error)) {
+    error.errors.forEach((err) => {
+      subCodes.push(err.extensions?.sub_code as string | undefined);
+ 
+      const ignoreError = ignoreErrorsForOperations.some((op) =>
+        err.path?.includes(op)
+      );
+ 
+      if (err.message && !ignoreError) {
+        errorMessages.push(err.message);
+      }
+    });
+  } else {
+    // Network or other error
+    const typedError = error as {
+      result?: { sub_code?: string };
+      message?: string;
+    };
+    const subCode = typedError?.result?.sub_code;
+    if (subCode) {
+      subCodes.push(subCode);
     }
-  });
+    if (typedError?.message) {
+      errorMessages.push(typedError.message);
+    }
+  }
 
   const hasInvalidTokenSubCode = subCodes.some(
     (code) => code && TOKEN_EXPIRED_SUB_CODES.includes(code)
@@ -129,8 +121,16 @@ const errorHandler = ({ networkError, graphQLErrors }: ErrorHandlerOptions): voi
 
   if (!hasInvalidTokenSubCode) {
     if (errorMessages.length) {
-      // const errorMessage = errorMessages.join(". ");
-      // TODO: Show error message UI
+      notification.error({
+        message: (
+          <ul className="list-disc ml-4 space-y-2">
+            {errorMessages.map((message, index) => (
+              <li key={index}>{message}</li>
+            ))}
+          </ul>
+        ),
+        placement: "top",
+      });
     }
     return;
   }
@@ -168,6 +168,11 @@ const createApolloClient = () => {
   return new ApolloClient({
     link: ApolloLink.from([errorLink, authMiddleware(), apiLink]),
     cache: new InMemoryCache(),
+    defaultOptions: {
+      mutate: {
+        errorPolicy: "all",
+      },
+    },
   });
 };
 

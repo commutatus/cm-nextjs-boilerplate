@@ -1,4 +1,3 @@
-import { useGlobals } from "@/common/context/globals";
 import { Button, Form, Input, Typography } from "antd";
 
 type MutationFunction<TVariables = unknown> = (
@@ -18,7 +17,6 @@ type LoginProps = {
 
 const Login = (props: LoginProps) => {
   const { userEmail, setUserEmail, isRequestingOtp } = props;
-  const { notificationApi } = useGlobals();
   const [form] = Form.useForm();
 
   const handleSendOtp = (values: { email: string }) => {
@@ -31,14 +29,11 @@ const Login = (props: LoginProps) => {
           },
         },
       })
-      .then(() => {
+      .then((res) => {
+        if (!res.data?.requestOtp) {
+          return;
+        }
         props.showVerifyOtp?.();
-      })
-      .catch((error: { message?: string }) => {
-        notificationApi?.error({
-          message: "Error",
-          description: error.message,
-        });
       });
   };
 
