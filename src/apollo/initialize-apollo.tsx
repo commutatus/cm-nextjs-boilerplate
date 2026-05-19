@@ -75,6 +75,7 @@ async function refreshTokens() {
   >({
     mutation: REFRESH_TOKEN_MUTATION,
     variables,
+    errorPolicy: "none",
   });
 }
 
