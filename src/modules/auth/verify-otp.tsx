@@ -95,16 +95,6 @@ const VerifyOtp = ({
         notificationApi?.success({
           message: "Login successful",
         });
-      })
-      .catch((error: { message?: string }) => {
-        const message =
-          (error as { cause?: { message?: string }; message?: string })?.cause?.message ??
-          (error as { message?: string })?.message ??
-          "An error occurred during OTP verification.";
-
-        notificationApi?.error({
-          message,
-        });
       });
   };
 
