@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import Clarity from "@microsoft/clarity";
-import { runMSClarityFunction } from "@/common/utils/helpers";
+import { runIfMSClarityEnabled } from "@/common/utils/helpers";
 
 const useMSClarity = () => {
   useEffect(() => {
-    runMSClarityFunction((projectId) => {
+    runIfMSClarityEnabled((projectId) => {
       Clarity.init(projectId);
     });
   }, []);
