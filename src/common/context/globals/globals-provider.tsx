@@ -7,6 +7,7 @@ import { AuthPageStates } from "@/modules/auth";
 import useCurrentUser from "./useCurrentUser";
 import { NotificationInstance } from "antd/es/notification/interface";
 import { useApolloClient } from "@apollo/client/react";
+import useIdentifyClarityUser from "@/common/hooks/useIdentifyClarityUser";
 
 type GlobalsContextType = Partial<{
   auth: ReturnType<typeof useAuth>;
@@ -45,6 +46,8 @@ export const GlobalsProvider = ({ children }: { children: ReactNode }) => {
   });
   
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+
+  useIdentifyClarityUser(currentUser?.data?.id);
 
   const toggleSidebarCollapse = useCallback(() => {
     setIsSidebarCollapsed((prev) => !prev);
