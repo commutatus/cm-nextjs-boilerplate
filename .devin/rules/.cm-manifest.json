@@ -1,0 +1,18 @@
+{
+  "commit": "a8c37179ed25871d7fc7dc8ca23c6a6648456f3a",
+  "platform": "nextjs",
+  "managed_rules": [
+    "antd.md",
+    "code-reuse.md",
+    "commit-message.md",
+    "data-state-handling.md",
+    "external-apis.md",
+    "formatting.md",
+    "general-hygiene.md",
+    "imports.md",
+    "naming.md",
+    "prettier.md",
+    "react-nextjs.md",
+    "typescript.md"
+  ]
+}

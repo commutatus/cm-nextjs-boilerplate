@@ -2,6 +2,7 @@
 
 import {
   getAccessToken,
+  getRefreshToken,
   removeApiTokens,
   updateAccessToken,
   updateRefreshToken,
@@ -20,8 +21,9 @@ const useAuth = () => {
   useEffect(() => {
     let nextAuthState = AuthStatesEnum.loggedOut;
 
-    const hasToken = Boolean(getAccessToken());
-    if (hasToken) {
+    const hasAccessToken = Boolean(getAccessToken());
+    const hasRefreshToken = Boolean(getRefreshToken());
+    if (hasAccessToken && hasRefreshToken) {
       nextAuthState = AuthStatesEnum.loggedIn;
     }
 
@@ -35,12 +37,12 @@ const useAuth = () => {
     accessToken?: string | null;
     refreshToken?: string | null;
   }) => {
-    if (!accessToken) {
+    if (!accessToken || !refreshToken) {
       return;
     }
 
     updateAccessToken(accessToken);
-    updateRefreshToken(refreshToken ?? "");
+    updateRefreshToken(refreshToken);
     setAuthState(AuthStatesEnum.loggedIn);
   };
 

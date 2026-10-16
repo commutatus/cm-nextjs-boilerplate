@@ -2,8 +2,17 @@ import Cookies from "universal-cookie";
 
 const cookies = new Cookies(null, { path: "/" });
 
-export const setCookie = (key: string, value: string) => {
-  cookies.set(key, value);
+export type CookieOptions = {
+  maxAge?: number;
+};
+
+export const setCookie = (key: string, value: string, options?: CookieOptions) => {
+  cookies.set(key, value, {
+    path: "/",
+    sameSite: "lax",
+    secure: true,
+    ...options,
+  });
 };
 
 export const getCookie = (key: string) => {
@@ -11,5 +20,5 @@ export const getCookie = (key: string) => {
 };
 
 export const removeCookie = (key: string) => {
-  cookies.remove(key);
+  cookies.remove(key, { path: "/" });
 };
