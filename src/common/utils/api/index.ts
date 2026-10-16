@@ -7,7 +7,7 @@ import {
 } from "@/common/utils/storage";
 
 const ACCESS_TOKEN_MAX_AGE_IN_SECONDS = 2 * 60 * 60; // 2 hours
-const REFRESH_TOKEN_MAX_AGE_IN_SECONDS = 6 * 30 * 24 * 60 * 60; // 6 months
+const REFRESH_TOKEN_MAX_AGE_IN_SECONDS = 180 * 24 * 60 * 60; // ~6 months (180 days)
 
 export const getAccessToken = () => {
   return getCookie(ACCESS_TOKEN_KEY);
