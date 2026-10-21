@@ -148,7 +148,9 @@ const errorHandler: ErrorLink.ErrorHandler = ({ error }): void => {
       if (newTokens) {
         const { accessToken, refreshToken } = newTokens;
         updateAccessToken(accessToken);
-        updateRefreshToken(refreshToken ?? "");
+        if (refreshToken) {
+          updateRefreshToken(refreshToken);
+        }
       } else {
         throw new Error("Failed to refresh tokens");
       }
